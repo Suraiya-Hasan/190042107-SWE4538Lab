@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Books Details</title>
+</head>
+
+<body>
+    <h2>Edit the Details of <%= data.name %>
+    </h2>
+    <%const editPostURL='/book-list/' + data._id %>
+        <form method="POST" action="<%=editPostURL%>">
+
+            <label for="name">Edit Book name:</label><br />
+            <input type="text" id="name" name="name" value="<%= data.name %>" /> <br />
+            <label for="author">Edit Author name:</label><br />
+            <input type="text" id="author" name="author" value="<%= data.author %>" /> <br />
+            <label for="genre">Edit Genre:</label><br />
+            <input type="text" id="genre" name="genre" value="<%= data.genre %>" /> <br /><br>
+
+            <input type="submit" value="Update book" />
+        </form>
+</body>
+</html>
