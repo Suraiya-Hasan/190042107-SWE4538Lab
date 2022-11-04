@@ -3,6 +3,13 @@ const bodyParser = require("body-parser");
 const express = require("express");
 const mongoose = require("mongoose");
 const router = require("./routes");
+
+
+const passport = require('passport');
+const session = require('express-session');
+const UserDetails = require('./models/userDetails');
+
+
 const app = express();
 const port = 3000;
 
@@ -16,6 +23,20 @@ mongoose
   .catch(() => {
     console.log("Could not connect to database!");
   });
+
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(UserDetails.createStrategy());
+passport.serializeUser(UserDetails.serializeUser());
+passport.deserializeUser(UserDetails.deserializeUser());
+//UserDetails.register({username:'admin', active: false}, 'admin');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
