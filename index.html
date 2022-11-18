@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class='container'>
+        <br>
+        <div class='jumbotron' style="align-content: center;">
+            <h1 class="display-4">Message</h1>
+            <br>
+            <div>
+                <label for="sender">Choose a sender:</label>
+                
+                <select name="sender" id="sender">
+                     <option value="Pam">Pam</option>
+                    <option value="Jim">Jim</option>
+                    <option value="Michael">Michael</option>
+                    <!-- <script>
+                        for (var count = 0; count < $(user).length(); count++) {
+                            <option value="user[count].name"> user[count].name</option>
+                        }
+                    </script> -->
+
+                </select >
+            </div>
+            <div>
+                <label for="seciever">Choose a reciever:</label>
+
+                <select name="reciever" id="reciever">
+                    <option value="Pam">Pam</option>
+                    <option value="Jim">Jim</option>
+                    <option value="Michael">Michael</option>
+                    <option value="Everyone">Everyone</option>
+                </select>
+            </div>
+
+            <textarea id="message" class="form-control" placeholder='Your Message Here'>
+</textarea>
+            <br>
+            <button id="send" class="btn btn-success">Send</button>
+        </div>
+        <div id="messages">
+
+        </div>
+        <div>
+            <label for="curr_user">Choose current user:</label>
+
+                <select name="curr_user" id="reciever">
+                    <option value="Pam">Pam</option>
+                    <option value="Jim">Jim</option>
+                    <option value="Michael">Michael</option>
+                </select>
+                <button id="choose" class="btn btn-success">Choose</button>
+        </div>
+    </div>
+    <script>
+
+            $(() => {
+                $("#send").click(() => {
+                    sendMessage({
+                        sender: $("#sender").val(),
+                        reciever: $("#reciever").val(),
+                        message: $("#message").val()
+                    });
+                })
+                getMessages()
+            })
+
+        function addMessages(message) {
+            $("#messages").append(`
+                <h4> Sender: ${message.sender} </h4>
+                <h4> Reciever: ${message.reciever} </h4>
+                <p>  Recieverd message: ${message.message} </p>`)
+        }
+
+        function getMessages() {
+            $.get('http://localhost:3000/messages', (data) => {
+                data.forEach(addMessages);
+            })
+        }
+
+        function sendMessage(message) {
+            $.post('http://localhost:3000/messages', message)
+        }
+        function getFilteredMsg(){
+            $get('http://localhost:3000/messages',(data)=>{
+                if(message.reciever == 'Pam' )
+                data.forEach(addMessages)
+            })
+        }
+    </script>
+</body>
+
+</html>
